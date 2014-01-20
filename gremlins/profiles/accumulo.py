@@ -36,10 +36,13 @@ fail_node_transient = faults.fail_network(bastion, 10, ["Accumulo-All"])
 
 profile = [
   triggers.Periodic(
+# How often do you want a failure? for master nodes, you should probably give enough time for recovery ~5-15 minutes
     60,
     metafaults.maybe_fault(
-      0.14,
+# How likely do you want a failure? decreasing this will make failures line up across nodes less often.
+      0.33,
       metafaults.pick_fault([
+# You can change the weights here to see different kinds of flaky nodes
         (1, fail_node_long),
         (1, fail_node_short),
         (2, fail_node_transient),
