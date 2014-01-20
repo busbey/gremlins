@@ -28,11 +28,11 @@ if not bastion:
 
 logging.info("Using %s as bastion host for network failures. You should be able to ssh from that host at all times." % bastion)
 
-fail_node_long = faults.fail_network(bastion, 300, ["Accumulo-All"])
+fail_node_long = faults.fail_network(bastion_host=bastion, seconds=300, restart_daemons=["Accumulo-All"], use_flush=True)
 # XXX make sure this is greater than ZK heartbeats
-fail_node_short = faults.fail_network(bastion, 45, ["Accumulo-All"])
+fail_node_short = faults.fail_network(bastion_host=bastion, seconds=45, restart_daemons=["Accumulo-All"], use_flush=True)
 # XXX make sure this is less than ZK heartbeats
-fail_node_transient = faults.fail_network(bastion, 10, ["Accumulo-All"])
+fail_node_transient = faults.fail_network(bastion_host=bastion, seconds=10, restart_daemons=["Accumulo-All"], use_flush=True)
 
 profile = [
   triggers.Periodic(

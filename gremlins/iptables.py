@@ -120,6 +120,17 @@ def remove_user_chain_from_output_chain(chain_id):
   """Remove the given user chain from the system OUTPUT chain"""
   procutils.run([IPTABLES, "-D", "OUTPUT", "-j", chain_id])
 
+def flush(chain_id=None):
+  """
+  Flush iptables chains. Defaults to all chains.
+
+  @param chain_id optionally limit flushing to given chain
+  """
+  if chain_id:
+    procutils.run([IPTABLES, "--flush", chain_id])
+  else:
+    procutils.run([IPTABLES, "--flush"])
+
 def delete_user_chain(chain_id):
   """
   Delete a user chain.
